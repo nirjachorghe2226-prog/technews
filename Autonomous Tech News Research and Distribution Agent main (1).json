@@ -154,12 +154,12 @@
         "resource": "message",
         "guildId": {
           "__rl": true,
-          "value": "1514149753338724392",
+          "value": "YOUR_DISCORD_SERVER_ID",
           "mode": "id"
         },
         "channelId": {
           "__rl": true,
-          "value": "1514149753787781130",
+          "value": "YOUR_DISCORD_CHANNEL_ID",
           "mode": "id"
         },
         "content": "={{ JSON.parse($json.output).discord_report }}",
@@ -186,15 +186,15 @@
         "resource": "message",
         "guildId": {
           "__rl": true,
-          "value": "=1514149753338724392",
+          "value": "=YOUR_DISCORD_SERVER_ID",
           "mode": "id"
         },
         "channelId": {
           "__rl": true,
-          "value": "1514149753787781130",
+          "value": "YOUR_DISCORD_CHANNEL_ID",
           "mode": "list",
           "cachedResultName": "general",
-          "cachedResultUrl": "https://discord.com/channels/1514149753338724392/1514149753787781130"
+          "cachedResultUrl": "https://discord.com/channels/YOUR_DISCORD_SERVER_ID/YOUR_DISCORD_CHANNEL_ID"
         },
         "content": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Message', ``, 'string') }}",
         "options": {}
@@ -241,7 +241,7 @@
         "select": "channel",
         "channelId": {
           "__rl": true,
-          "value": "https://app.slack.com/client/T0B96RKRU4X/C0BAGJJKHMW",
+          "value": "https://app.slack.com/client/YOUR_WORKSPACE/YOUR_CHANNEL",
           "mode": "url"
         },
         "text": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Message_Text', ``, 'string') }}",
@@ -265,7 +265,7 @@
     },
     {
       "parameters": {
-        "sendTo": "nirja.chorghe2226@gmail.com",
+        "sendTo": "your-email@example.com",
         "subject": "=Tech News Digest - {{$now.toFormat(\"MMMM d, yyyy\")}}",
         "message": "={{ `\n<h1>🚀 TECH NEWS DIGEST</h1>\n${JSON.parse($json.output).email_report.replace(/\\n/g, '<br>')}\n` }}",
         "options": {}
