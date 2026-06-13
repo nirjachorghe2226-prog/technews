@@ -11,6 +11,7 @@ The Tech News Research Agent automates the entire process of technology news dis
 The workflow continuously gathers articles from multiple RSS sources, combines and processes them, uses AI to identify the most relevant technology news, generates concise summaries, and automatically delivers reports to communication channels.
 
 This eliminates the need for manual news monitoring while ensuring timely access to important technology updates.
+
 <img width="1120" height="432" alt="Screenshot 2026-06-12 at 9 33 53 PM" src="https://github.com/user-attachments/assets/a3680991-65b1-4bd6-b1ca-0200a5d3b034" />
 
 ---
@@ -209,3 +210,52 @@ An autonomous AI-powered research agent that:
 * Gmail Integration
 * Discord Integration
 
+## Sample Output
+###Email Format
+<h1>📰 TECH NEWS DIGEST</h1>
+<h2> 1. [Article Title]</h2>
+Summary:
+• Point 1
+• Point 2
+• Point 3
+• Point 4
+• Point 5
+Link:
+[Original Article URL]
+----------------------------------------------------------------------
+<h2>2. [Article Title]</h2>
+Summary:
+• Point 1
+• Point 2
+• Point 3
+• Point 4
+• Point 5
+Link:
+[Original Article URL]
+
+###Discord Format
+# **📰 Tech News Digest**
+
+## **1. [Article Title]**
+
+**Summary:**
+• Point 1
+• Point 2
+• Point 3
+• Point 4
+• Point 5
+
+**Link:**
+[Original Article URL]
+
+## **2. [Article Title]**
+
+**Summary:**
+• Point 1
+• Point 2
+• Point 3
+• Point 4
+• Point 5
+
+**Link:**
+[Original Article URL]
