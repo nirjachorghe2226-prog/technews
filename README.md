@@ -211,44 +211,46 @@ An autonomous AI-powered research agent that:
 * Discord Integration
 
 ## Sample Output
-###Email Format
+# Output Format
+
+## 📧 Email Report
+
+```html
 <h1>📰 TECH NEWS DIGEST</h1>
-<h2> 1. [Article Title]</h2>
+
+<h2>1. [Article Title]</h2>
+
 Summary:
 • Point 1
 • Point 2
 • Point 3
 • Point 4
 • Point 5
+
 Link:
 [Original Article URL]
+
 ----------------------------------------------------------------------
+
 <h2>2. [Article Title]</h2>
+
 Summary:
 • Point 1
 • Point 2
 • Point 3
 • Point 4
 • Point 5
+
 Link:
 [Original Article URL]
+```
 
-###Discord Format
-# **📰 Tech News Digest**
+## 💬 Discord Report
 
-## **1. [Article Title]**
+```markdown
+# 📰 Tech News Digest
 
-**Summary:**
-• Point 1
-• Point 2
-• Point 3
-• Point 4
-• Point 5
-
-**Link:**
-[Original Article URL]
-
-## **2. [Article Title]**
+## 1. [Article Title]
 
 **Summary:**
 • Point 1
@@ -259,3 +261,17 @@ Link:
 
 **Link:**
 [Original Article URL]
+
+## 2. [Article Title]
+
+**Summary:**
+• Point 1
+• Point 2
+• Point 3
+• Point 4
+• Point 5
+
+**Link:**
+[Original Article URL]
+```
+
