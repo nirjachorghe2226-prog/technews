@@ -11,6 +11,7 @@ The Tech News Research Agent automates the entire process of technology news dis
 The workflow continuously gathers articles from multiple RSS sources, combines and processes them, uses AI to identify the most relevant technology news, generates concise summaries, and automatically delivers reports to communication channels.
 
 This eliminates the need for manual news monitoring while ensuring timely access to important technology updates.
+<img width="1120" height="432" alt="Screenshot 2026-06-12 at 9 33 53 PM" src="https://github.com/user-attachments/assets/a3680991-65b1-4bd6-b1ca-0200a5d3b034" />
 
 ---
 
@@ -207,5 +208,4 @@ An autonomous AI-powered research agent that:
 * JavaScript
 * Gmail Integration
 * Discord Integration
-<img width="1120" height="432" alt="Screenshot 2026-06-12 at 9 33 53 PM" src="https://github.com/user-attachments/assets/a3680991-65b1-4bd6-b1ca-0200a5d3b034" />
 
