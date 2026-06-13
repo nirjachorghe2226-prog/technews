@@ -207,3 +207,5 @@ An autonomous AI-powered research agent that:
 * JavaScript
 * Gmail Integration
 * Discord Integration
+<img width="1120" height="432" alt="Screenshot 2026-06-12 at 9 33 53 PM" src="https://github.com/user-attachments/assets/a3680991-65b1-4bd6-b1ca-0200a5d3b034" />
+
