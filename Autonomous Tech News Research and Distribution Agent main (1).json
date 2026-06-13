@@ -1,0 +1,430 @@
+{
+  "name": "Autonomous Tech News Research and Distribution Agent main",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "triggerAtHour": 8
+            }
+          ]
+        }
+      },
+      "id": "5651ee95-4fe4-4854-8239-224e87e815b7",
+      "name": "Daily Schedule",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        240,
+        496
+      ]
+    },
+    {
+      "parameters": {
+        "url": "https://news.ycombinator.com/rss?utm_source=chatgpt.com",
+        "options": {}
+      },
+      "id": "e70df530-276a-49c7-b0f3-98397a7033d0",
+      "name": "Hacker News RSS",
+      "type": "n8n-nodes-base.rssFeedRead",
+      "typeVersion": 1.2,
+      "position": [
+        464,
+        208
+      ]
+    },
+    {
+      "parameters": {
+        "numberInputs": 3
+      },
+      "id": "9dd53d4c-61d2-413f-a837-cc7566dca98c",
+      "name": "Combine All Articles",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        688,
+        432
+      ]
+    },
+    {
+      "parameters": {
+        "url": "=https://techcrunch.com/feed/?utm_source=chatgpt.com",
+        "options": {}
+      },
+      "id": "fd1d7b90-cc2e-47bd-9aea-1fc6ccead1b3",
+      "name": "TechCrunch RSS",
+      "type": "n8n-nodes-base.rssFeedRead",
+      "typeVersion": 1.2,
+      "position": [
+        464,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.articles }}",
+        "hasOutputParser": true,
+        "options": {
+          "systemMessage": "You are a professional tech news editor.\n\nAnalyze ALL provided articles.\n\nOnly consider articles that are actual technology NEWS.\n\nIgnore:\n- Personal blogs\n- Opinion pieces\n- Tutorials\n- Product reviews\n- Essays\n- Regulatory discussions\n- Lifestyle content\n\nPrioritize:\n- AI news\n- Major company announcements\n- Product launches\n- Cybersecurity incidents\n- Funding rounds\n- Acquisitions\n- Open-source releases\n\nSelect the 2 most important UNIQUE technology news stories from the current batch.\nDo not select two stories covering similar topics.\n\nReturn ONLY valid JSON.\n\nRules:\n- Do not return markdown outside JSON.\n- Do not return explanations.\n- Do not return code fences.\n- Preserve all line breaks exactly.\n- Keep emojis and separators.\n- Use \\n for line breaks inside JSON strings.\n- Escape quotes correctly.\n- email_report must follow the template exactly.\n- discord_report must be under 1500 characters.\n- Include original URLs.\n- Use article titles exactly when possible.\n\nReturn this schema:\n\n{\n  \"email_report\": \"<h2> 1. [TITLE]</h2>\\nSummary:\\n• Point 1\\n• Point 2\\n• Point 3\\n• Point 4\\n• Point 5\\nLink:\\n[URL]\\n----------------------------------------------------------------------\\n<h2>2. [TITLE]</h2>\\nSummary:\\n• Point 1\\n• Point 2\\n• Point 3\\n• Point 4\\n• Point 5\\nLink:\\n[URL]\",\n  \n  \"discord_report\": \n\n# **🚀 Tech News Digest**\n\n## **1. [TITLE]**\n\n**Summary:**\n• Point 1\n• Point 2\n• Point 3\n• Point 4\n• Point 5\n\n**Link:**\n[URL]\n\n## **2. [TITLE]**\n\n**Summary:**\n• Point 1\n• Point 2\n• Point 3\n• Point 4\n• Point 5\n\n**Link:**\n[URL]\"\n}"
+        }
+      },
+      "id": "a44a494b-7701-42d7-a255-7cdd7cf8711f",
+      "name": "Categorize & Summarize",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        1568,
+        384
+      ]
+    },
+    {
+      "parameters": {
+        "model": "llama-3.1-8b-instant",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGroq",
+      "typeVersion": 1,
+      "position": [
+        912,
+        1072
+      ],
+      "id": "459bbe20-32d9-4570-977b-37ecdd3c1fd4",
+      "name": "Groq Chat Model",
+      "credentials": {
+        "groqApi": {
+          "id": "PGnnAiNDDLQZE8uB",
+          "name": "Groq account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const articles = items\n  .slice(0, 15)\n  .map(item => `\nTitle: ${item.json.title}\nLink: ${item.json.link}\n`)\n  .join('\\n\\n');\n\nreturn [\n  {\n    json: {\n      articles\n    }\n  }\n];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1088,
+        400
+      ],
+      "id": "0b8305f4-27aa-4895-a67e-0927520afa27",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "url": "https://www.theverge.com/rss/index.xml",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.rssFeedRead",
+      "typeVersion": 1.2,
+      "position": [
+        464,
+        560
+      ],
+      "id": "6cae8e13-e15d-4ba2-be8b-da96dba9ef50",
+      "name": "RSS Read"
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('To', ``, 'string') }}",
+        "subject": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Subject', ``, 'string') }}",
+        "message": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Message', ``, 'string') }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmailTool",
+      "typeVersion": 2.2,
+      "position": [
+        1904,
+        1024
+      ],
+      "id": "7128b746-4a93-4d1b-be74-378d19e7cd70",
+      "name": "Send a message in Gmail",
+      "webhookId": "cf56cd46-4bf5-4961-8ade-86fc280f2459",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "Pa4E3iRg08bxhN92",
+          "name": "Gmail OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "message",
+        "guildId": {
+          "__rl": true,
+          "value": "1514149753338724392",
+          "mode": "id"
+        },
+        "channelId": {
+          "__rl": true,
+          "value": "1514149753787781130",
+          "mode": "id"
+        },
+        "content": "={{ JSON.parse($json.output).discord_report }}",
+        "options": {}
+      },
+      "id": "b0991144-a8b0-4666-9aa1-a3149b3a1b48",
+      "name": "Send to Discord",
+      "type": "n8n-nodes-base.discord",
+      "typeVersion": 2,
+      "position": [
+        1968,
+        608
+      ],
+      "webhookId": "783e2b40-6f52-4e45-b25f-6354e52480f0",
+      "credentials": {
+        "discordBotApi": {
+          "id": "OZIOO1BesdeLrryx",
+          "name": "Discord Bot account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "message",
+        "guildId": {
+          "__rl": true,
+          "value": "=1514149753338724392",
+          "mode": "id"
+        },
+        "channelId": {
+          "__rl": true,
+          "value": "1514149753787781130",
+          "mode": "list",
+          "cachedResultName": "general",
+          "cachedResultUrl": "https://discord.com/channels/1514149753338724392/1514149753787781130"
+        },
+        "content": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Message', ``, 'string') }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.discordTool",
+      "typeVersion": 2,
+      "position": [
+        2320,
+        1024
+      ],
+      "id": "0c2255d1-9fb2-407c-9bd4-c40d5932b2c7",
+      "name": "Send a message in Discord",
+      "webhookId": "c5341bec-407e-41c5-9d1b-930510a1c0e1",
+      "credentials": {
+        "discordBotApi": {
+          "id": "OZIOO1BesdeLrryx",
+          "name": "Discord Bot account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": "openai/gpt-oss-120b:free",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        1536,
+        608
+      ],
+      "id": "d8c2aef8-af83-4cd0-afac-1e204fd0b8d1",
+      "name": "OpenRouter Chat Model",
+      "credentials": {
+        "openRouterApi": {
+          "id": "BG4PCdN0Ia7plknJ",
+          "name": "OpenRouter account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "select": "channel",
+        "channelId": {
+          "__rl": true,
+          "value": "https://app.slack.com/client/T0B96RKRU4X/C0BAGJJKHMW",
+          "mode": "url"
+        },
+        "text": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Message_Text', ``, 'string') }}",
+        "otherOptions": {}
+      },
+      "type": "n8n-nodes-base.slackTool",
+      "typeVersion": 2.5,
+      "position": [
+        2112,
+        1024
+      ],
+      "id": "e8f9a352-9d2c-436e-8007-37a837f17f15",
+      "name": "Send a message in Slack",
+      "webhookId": "7ef15f64-ef2e-436a-8a65-ee959be2012e",
+      "credentials": {
+        "slackOAuth2Api": {
+          "id": "w5hdAgx3D7G6qVkI",
+          "name": "Slack OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "nirja.chorghe2226@gmail.com",
+        "subject": "=Tech News Digest - {{$now.toFormat(\"MMMM d, yyyy\")}}",
+        "message": "={{ `\n<h1>🚀 TECH NEWS DIGEST</h1>\n${JSON.parse($json.output).email_report.replace(/\\n/g, '<br>')}\n` }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        1968,
+        400
+      ],
+      "id": "da5d38f5-6438-42a2-adcc-07b73c68ddce",
+      "name": "Send a message",
+      "webhookId": "fc287f12-6a7e-4f29-b810-726052f9ded5",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "Pa4E3iRg08bxhN92",
+          "name": "Gmail OAuth2 API"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Daily Schedule": {
+      "main": [
+        [
+          {
+            "node": "Hacker News RSS",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "TechCrunch RSS",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "RSS Read",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Hacker News RSS": {
+      "main": [
+        [
+          {
+            "node": "Combine All Articles",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Combine All Articles": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "TechCrunch RSS": {
+      "main": [
+        [
+          {
+            "node": "Combine All Articles",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Categorize & Summarize": {
+      "main": [
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Send to Discord",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Groq Chat Model": {
+      "ai_languageModel": [
+        []
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "Categorize & Summarize",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "RSS Read": {
+      "main": [
+        [
+          {
+            "node": "Combine All Articles",
+            "type": "main",
+            "index": 2
+          }
+        ]
+      ]
+    },
+    "Send a message in Gmail": {
+      "ai_tool": [
+        []
+      ]
+    },
+    "Send a message in Discord": {
+      "ai_tool": [
+        []
+      ]
+    },
+    "OpenRouter Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Categorize & Summarize",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send a message in Slack": {
+      "ai_tool": [
+        []
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "e43e77f3-f825-408e-9bc0-e32bd89a2887",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "fc76a26e19f9d6eada46bab7f1b6b4b5fb748e37eaac9e5d4ee1d63329e21e69"
+  },
+  "nodeGroups": [],
+  "id": "NRPGKJyTh1iWL6aX",
+  "tags": []
+}
