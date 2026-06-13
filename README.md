@@ -211,7 +211,6 @@ An autonomous AI-powered research agent that:
 * Discord Integration
 
 ## Sample Output
-# Output Format
 
 ## 📧 Email Report
 
